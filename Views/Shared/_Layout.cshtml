@@ -1,0 +1,173 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/themes/base/css")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/bootstrap")
+</head>
+<body>
+
+    <header>
+        <div class="navbar navbar-inverse">
+            <div class="navbar-inner">
+                <a class="navbar-brand" href="#"><img id="logo" src="/img/logoNew.png" alt="FURNITURE" /></a>
+                <div class="container-fluid">
+                    <div class="col-xs-offset-2">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="/Home/Index">Home</a></li>
+                        </ul>
+                        <!---------------------------->
+                        @{
+                            string[] items = { "Tablet", "Mobile", "Laptop", "Desktop", "Accessories", "Furniture", "Decor", "Other", "Car", "Motorcycle", "Spare Parts" };
+                        }
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Categories<b class="caret"></b></a>
+                                <ul class="dropdown-menu">
+                                    <li class="dropdown-header"><b style="color: black;">Computers</b></li>
+                                    <li><a role="menuitem" href="~/Home/showRecentAds?item=@items[0]">@items[0]</a></li>
+                                    <li><a role="menuitem" href="~/Home/showRecentAds?item=@items[1]">@items[1]</a></li>
+                                    <li><a role="menuitem" href="~/Home/showRecentAds?item=@items[2]">@items[2]</a></li>
+                                    <li><a role="menuitem" href="~/Home/showRecentAds?item=@items[3]">@items[3]</a></li>
+                                    <li><a role="menuitem" href="~/Home/showRecentAds?item=@items[4]">@items[4]</a></li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header"><b style="color: black;">Homes</b></li>
+                                    <li><a role="menuitem" href="~/Home/showRecentAds?item=@items[5]">@items[5]</a></li>
+                                    <li><a role="menuitem" href="~/Home/showRecentAds?item=@items[6]">@items[6]</a></li>
+                                    <li><a role="menuitem" href="~/Home/showRecentAds?item=@items[7]">@items[7]</a></li>
+                                    <li class="divider"></li>
+                                    <li class="dropdown-header"><b style="color: black;">Vehicles</b></li>
+                                    <li><a role="menuitem" href="~/Home/showRecentAds?item=@items[8]">@items[8]</a></li>
+                                    <li><a role="menuitem" href="~/Home/showRecentAds?item=@items[9]">@items[9]</a></li>
+                                    <li><a role="menuitem" href="~/Home/showRecentAds?item=@items[10]">@items[10]</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                        <!---------------------------->
+                        <ul class="nav navbar-nav"><li><a href="~/Home/Index/#about">About</a></li></ul>
+                        <!---------------------------->
+                        <ul class="nav navbar-nav">
+                            <li><a href="~/Home/Index/#contact">Contact</a></li>
+
+                        </ul>
+                        <!---------------------------->
+                        <ul class="nav navbar-nav">
+                            <li><a href="~/Home/Index/#search">Search</a></li>
+
+                        </ul>
+                        <!---------------------------->
+                    </div>
+                    
+
+                    @{if (Session["Id"] == null)
+                    {
+                        <form class="navbar-form pull-right" action="~/Home/SignIn" method="post">
+                            <input class="span2" name="email" type="email" placeholder="Email" style="height:29px; border-radius:4px;" required />
+
+                            <input class="span2" name="password" type="password" placeholder="Password" style="height:29px; border-radius:4px;" required/>
+                            <button type="submit" id="signinBtn" class="btn">Sign in</button>
+
+                            <a class="btn btn-link" href="~/Home/SignUpForm">Join</a>
+                        </form>
+                    }
+
+
+                      else if (Session["Id"] != null && Session["email"] != "admin")
+                    {
+                          
+                              int? i = Convert.ToInt32(Session["Id"]);
+                        <ul class="nav navbar-nav pull-right">
+                            <li><a class="btn btn-success active" style="color: white; width: 100px;" href="~/Home/PostAd">Post Ad</a></li>
+                            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                            <li><a class="btn btn-primary" style="color:white; width:100px;" href="~/Home/showAds?id=@i">My Ads</a></li>
+                            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                            <li><a class="btn btn-danger" style="color: white; width: 100px;" href="~/Home/SignOut">Sign Out</a></li>
+                        </ul>
+                    }
+                    
+                    
+                    else
+                    {
+                        int? i = Convert.ToInt32(Session["Id"]);
+                        <ul class="nav navbar-nav pull-right">
+                            <li><a class="btn btn-primary active" style="color: white; width: 100px;" href="~/Home/ShowAllUsers">Show Users</a></li>
+                            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                            <li><a class="btn btn-primary" style="color:white; width:100px;" href="~/Home/ShowAllAds">Show Ads</a></li>
+                            <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+                            <li><a class="btn btn-danger" style="color: white; width: 100px;" href="~/Home/SignOut">Sign Out</a></li>
+                        </ul>
+                    }
+                    }
+                    @{int userAuthn = Convert.ToInt32(ViewBag.userAuthn);}
+                </div>
+            </div>
+
+        </div>
+        @if (userAuthn == -1)
+        {
+            <div class="alert alert-danger text-center">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Error: </strong> Wrong email or password
+            </div>
+        }
+        
+        @{if (Session["Id"] != null)
+        {
+            <div class="alert alert-success text-center">
+                
+                <strong>Welcome! </strong> @Session["name"]
+            </div>
+        }
+
+        }
+       
+    </header>
+    <div id="PageContent">
+    @RenderBody()
+        </div>
+
+    @RenderSection("scripts", required: false)
+    <footer class="text-center"> 
+        <div class="footer-below">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        Copyright &copy; Punjab University College of Information Technology
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        #PageContent {
+            
+            /*padding: 10px;*/
+            min-height: -webkit-calc(100% - 100px); /* Chrome */
+            min-height: -moz-calc(100% - 100px); /* Firefox */
+            min-height: calc(100% - 100px); /* native */
+        }
+
+        .footer {
+            position: relative;
+            clear: both;
+        }
+        #logo {
+            height: 29px;
+        }
+    </style>
+</body>
+</html>

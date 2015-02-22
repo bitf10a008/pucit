@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Database1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="accounts">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="userName" Type="varchar" MaxLength="50" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+          <Property Name="phoneno" Type="nchar" MaxLength="10" />
+          <Property Name="accStatus" Type="varchar" MaxLength="50" />
+          <Property Name="accType" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ads">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AccId" Type="int" />
+          <Property Name="title" Type="varchar" MaxLength="50" />
+          <Property Name="description" Type="varchar" MaxLength="50" />
+          <Property Name="price" Type="int" />
+          <Property Name="category" Type="varchar" MaxLength="50" />
+          <Property Name="subcategory" Type="varchar" MaxLength="50" />
+          <Property Name="post_date" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="images">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="img" Type="varchar(max)" />
+          <Property Name="Ad_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="messages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="50" />
+          <Property Name="email" Type="varchar" MaxLength="50" />
+          <Property Name="phoneno" Type="nchar" MaxLength="10" />
+          <Property Name="message" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_ads_accounts">
+          <End Role="accounts" Type="Self.accounts" Multiplicity="0..1" />
+          <End Role="ads" Type="Self.ads" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ads">
+              <PropertyRef Name="AccId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_images_ads">
+          <End Role="ads" Type="Self.ads" Multiplicity="0..1" />
+          <End Role="images" Type="Self.images" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ads">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="images">
+              <PropertyRef Name="Ad_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1ModelStoreContainer">
+          <EntitySet Name="accounts" EntityType="Self.accounts" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ads" EntityType="Self.ads" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="images" EntityType="Self.images" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="messages" EntityType="Self.messages" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ads_accounts" Association="Self.FK_ads_accounts">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="ads" EntitySet="ads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_images_ads" Association="Self.FK_images_ads">
+            <End Role="ads" EntitySet="ads" />
+            <End Role="images" EntitySet="images" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Database1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="userName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phoneno" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="accStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="accType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ads" Relationship="Self.FK_ads_accounts" FromRole="accounts" ToRole="ads" />
+        </EntityType>
+        <EntityType Name="ad">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AccId" Type="Int32" />
+          <Property Name="title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="price" Type="Int32" />
+          <Property Name="category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="subcategory" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="post_date" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="account" Relationship="Self.FK_ads_accounts" FromRole="ads" ToRole="accounts" />
+          <NavigationProperty Name="images" Relationship="Self.FK_images_ads" FromRole="ads" ToRole="images" />
+        </EntityType>
+        <EntityType Name="image">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="img" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Ad_Id" Type="Int32" />
+          <NavigationProperty Name="ad" Relationship="Self.FK_images_ads" FromRole="images" ToRole="ads" />
+        </EntityType>
+        <EntityType Name="message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="phoneno" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="message1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK_ads_accounts">
+          <End Role="accounts" Type="Self.account" Multiplicity="0..1" />
+          <End Role="ads" Type="Self.ad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="accounts">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ads">
+              <PropertyRef Name="AccId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_images_ads">
+          <End Role="ads" Type="Self.ad" Multiplicity="0..1" />
+          <End Role="images" Type="Self.image" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ads">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="images">
+              <PropertyRef Name="Ad_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Database1Entities12" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="accounts" EntityType="Self.account" />
+          <EntitySet Name="ads" EntityType="Self.ad" />
+          <EntitySet Name="images" EntityType="Self.image" />
+          <EntitySet Name="messages" EntityType="Self.message" />
+          <AssociationSet Name="FK_ads_accounts" Association="Self.FK_ads_accounts">
+            <End Role="accounts" EntitySet="accounts" />
+            <End Role="ads" EntitySet="ads" />
+          </AssociationSet>
+          <AssociationSet Name="FK_images_ads" Association="Self.FK_images_ads">
+            <End Role="ads" EntitySet="ads" />
+            <End Role="images" EntitySet="images" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Database1ModelStoreContainer" CdmEntityContainer="Database1Entities12">
+          <EntitySetMapping Name="accounts">
+            <EntityTypeMapping TypeName="Database1Model.account">
+              <MappingFragment StoreEntitySet="accounts">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="userName" ColumnName="userName" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="phoneno" ColumnName="phoneno" />
+                <ScalarProperty Name="accStatus" ColumnName="accStatus" />
+                <ScalarProperty Name="accType" ColumnName="accType" />
+                <ScalarProperty Name="email" ColumnName="email" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ads">
+            <EntityTypeMapping TypeName="Database1Model.ad">
+              <MappingFragment StoreEntitySet="ads">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="AccId" ColumnName="AccId" />
+                <ScalarProperty Name="title" ColumnName="title" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="category" ColumnName="category" />
+                <ScalarProperty Name="subcategory" ColumnName="subcategory" />
+                <ScalarProperty Name="post_date" ColumnName="post_date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="images">
+            <EntityTypeMapping TypeName="Database1Model.image">
+              <MappingFragment StoreEntitySet="images">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="img" ColumnName="img" />
+                <ScalarProperty Name="Ad_Id" ColumnName="Ad_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="messages">
+            <EntityTypeMapping TypeName="Database1Model.message">
+              <MappingFragment StoreEntitySet="messages">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phoneno" ColumnName="phoneno" />
+                <ScalarProperty Name="message1" ColumnName="message" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

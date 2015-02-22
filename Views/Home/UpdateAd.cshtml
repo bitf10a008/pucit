@@ -1,0 +1,43 @@
+﻿@model Ad_Poster_Project.Models.ad
+@{
+    ViewBag.Title = "UpdateAd";
+}
+<style>
+    body {
+        background-image: url('/Content/img/bg.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        background-size: 100% 100%;
+    }
+</style>
+<br /><br />
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div style="background-color: rgba(207, 218, 236, 0.48); border-radius: 19px;">
+            <br /><h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Update Ad</h2>
+            <br />
+            <form action="~/Home/UpdateAdConfirm/@Model.Id" method="post" style="text-align:center">
+                <div class="input-group" style="left:33%;">
+                    <input type="text" class="form-control" value="@Model.category"  name="category" />
+                </div><br />
+                <div class="input-group" style="left:33%;">
+                    <input type="text" class="form-control" value="@Model.subcategory" name="subcategory" />
+                </div><br />
+                <div class="input-group" style="left:33%;">
+                    <input type="text" class="form-control" value="@Model.title" id="title" name="title" />
+                </div><br />
+                <div class="input-group" style="left:33%;">
+                    <input type="text" class="form-control" value="@Model.description" id="description" name="description" />
+                </div><br />
+                <div class="input-group" style="left:33%;">
+                    <input type="text" class="form-control" value="@Model.price" id="price" name="price" />
+                </div><br />
+                
+                <button type="submit" id="submitBtn" class="btn btn-primary">Update Ad</button>
+            </form><br /><br />
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>

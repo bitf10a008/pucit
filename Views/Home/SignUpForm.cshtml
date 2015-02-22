@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "SignUpForm";
+}
+
+
+<style>
+    body {
+        background-image: url('/Content/img/bg.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        background-size: 100% 100%;
+    }
+    .mytxt{
+        width: 264px;
+        height: 31px;
+        border-radius: 4px;
+        border-width: 1px;
+        border-bottom-color: rgb(150, 179, 139);
+    }
+</style>
+<br /><br />
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div style="background-color: rgba(207, 218, 236, 0.48); border-radius: 19px;">
+            <br /><h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sign Up</h2>
+            <br />
+            <form action="~/Home/SignUp/@Model" method="post" style="margin-left:182px;">
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true)
+                <input type="text" required placeholder="Name" id="name" class="mytxt" name="name" />
+                <br /><br />
+            <!-- ----------------------------------------------------------------->
+                
+                <input style="display:inline;" type="email" required placeholder="Email" id="email" class="mytxt" name="email" />&nbsp;&nbsp;<input style="display:inline;" type="button" id="b1" value="Check" class="btn-info"/><br />
+                    <div id="result1" style="margin-right:260px;"></div>
+                <br />
+            <!---------------------------------------------------------------------->
+                
+                <input style="display:inline;" type="text" required placeholder="Username" id="userName" class="mytxt" name="userName" />&nbsp;&nbsp;<input style="display:inline;" type="button" id="b2" value="Check" class="btn-info" /><br />
+                <div id="result2" style="margin-right:260px;"></div>
+                <br />
+            <!--------------------------------------------------------------------->
+                
+                <input type="password" required placeholder="Password" class="mytxt" name="password" /><br />
+                <br />
+                
+                    <input type="number" required placeholder="Contact no" class="mytxt" name="phoneno" />
+                <br /><br />
+                <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div><button type="submit" id="submitBtn" class="btn btn-primary" style="margin-left: 92px; text-align: center;">Sign up</button>
+            </form><br /><br />
+        </div>
+    </div>
+    <div class="col-md-3"></div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        $('#b1').click(function () {
+            
+            var myemail = $('#email').val();
+
+            //alert('User Name ='+ userName);
+            //$('#checking').show();
+            $.getJSON("/Home/CheckEmail?myemail=" + myemail.toString(), function (data) {
+                //$('#checking').hide();
+                if (data) {
+                    $('#result1').text("Email is valid");
+                    $('#result1').attr('class','alert-success');
+                }
+                else {
+                    $('#result1').text("Email is already taken");
+                    $('#result1').attr('class', 'alert-danger');
+                }
+                
+            });
+
+        });
+
+        $('#b2').click(function () {
+
+            var myu = $('#userName').val();
+
+            //alert('User Name ='+ userName);
+            //$('#checking').show();
+            $.getJSON("/Home/Checkusername?myu=" + myu.toString(), function (data) {
+                //$('#checking').hide();
+                if (data) {
+                    $('#result2').text("Username is valid");
+                    $('#result2').attr('class', 'alert-success');
+                }
+                else {
+                    $('#result2').text("Username is already taken");
+                    $('#result2').attr('class', 'alert-danger');
+                }
+
+            });
+
+        });
+
+
+    });
+</script>

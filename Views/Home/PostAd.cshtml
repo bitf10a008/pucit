@@ -1,0 +1,160 @@
+﻿@model Ad_Poster_Project.Models.ad
+
+
+<style>
+    body {
+        background-image: url('/Content/img/bg.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        background-size: 100% 100%;
+    }
+
+    #leftdiv1 {
+        margin-left: 156px;
+    }
+
+    #leftdiv2 {
+        margin-left: 90px;
+    }
+
+    .soselect {
+        width: 143px;
+        height: 28px;
+        border-radius: 9px;
+        border-bottom-style: groove;
+    }
+
+        .soselect:hover {
+            border-color: rgb(211, 232, 80);
+        }
+
+    .soinput {
+        width: 191px;
+        height: 28px;
+        border-radius: 5px;
+    }
+
+        .soinput:hover {
+            border-color: rgb(211, 232, 80);
+        }
+</style>
+
+
+
+<br /><br />
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        @if (TempData["check"].Equals((object)5))
+        {
+            <div class="alert alert-info text-center">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                Image uploaded successfully
+            </div>
+        }
+        <!--background div-->
+        <div id="bkdiv" style="background-color: rgba(207, 218, 236, 0.48); border-radius: 19px; height: 755px; width: 100%;">
+            <br /><h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ad Information</h2>
+            <br />
+            <!--Div to show image uploaded-->
+            @if (TempData["check"].Equals((object)1))
+            {
+                <div id="gallery" style="text-align: center;">
+                    <a id="fancybx" class="fancybox" href="#"><img id="imgshow1" style="height:226px; width:252px;" class="img-thumbnail" src="/img/noimage.png" /></a>
+                    <p style="font-size:smaller; text-align:center;">You can add only one picture.</p>
+                    <p style="font-size:smaller; text-align:center;">Size should not be greater than <b>4MB</b></p>
+                </div><br />
+            }
+            <!-- ------------------------------------------------- -->
+
+            <div id="leftdiv1" style="float:left;">
+                @if (TempData["check"].Equals((object)1))
+                {<label>Image(s)</label>}<br /><label style="margin-top:24px;">Choose category</label><br /><label style="margin-top:24px;">Choose subcategory</label><br /><label style="margin-top:24px;">Title</label><br /><label style="margin-top:24px;">Description</label><br /><label style="margin-top:24px;">Asking Price</label><span class="add-on">&nbsp;Rs.</span><br />
+        </div>
+        <div id="leftdiv2" style="float:left;">
+            @if (TempData["check"].Equals((object)1))
+            {
+                <form action="~/Home/SaveImage" method="post" id="imageForm" enctype="multipart/form-data">
+                    <input type="file" name="img" style="display:inline;" />
+                    <input type="submit" id="uploadImg" value="Upload" />
+                </form><br />
+            }
+            @if (TempData["check"].Equals((object)5))
+            {
+                <script type="text/javascript">
+                    $(document).ready(function () {
+
+                        $('#bkdiv').css({ "height": "462px" });
+                        $('#form1').css({ "margin-top": "44px" });
+                    });
+                </script>
+            }
+            <form id="form1" action="~/Home/PostAdConfirm" method="post" enctype="multipart/form-data">
+                <fieldset>
+
+                    <select form="form1" name="category" class="soselect" required>
+                        <option value="Computers">Computers</option>
+                        <option value="Homes">Homes</option>
+                        <option value="Vehicles">Vehicles</option>
+                    </select><br /><br />
+
+                    <select form="form1" name="subcategory" class="soselect" required>
+                        <option value="Tablet">Tablet</option>
+                        <option value="Mobile">Mobile</option>
+                        <option value="Laptop">Laptop</option>
+                        <option value="Desktop">Desktop</option>
+                        <option value="Accessories">Accessories</option>
+                        <option disabled="disabled">──────────────────</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Decor">Decor</option>
+                        <option value="Other">Other</option>
+                        <option disabled="disabled">──────────────────</option>
+                        <option value="Car">Car</option>
+                        <option value="Motorcycle">Motorcycle</option>
+                        <option value="Spare Parts">Spare Parts</option>"Tablet", "Mobile", "Laptop", "Desktop", "Accessories", "Car", "Motorcycle", "Spare Parts"
+                    </select><br /><br />
+
+
+                    <input class="soinput" type="text" required="required" id="title" value="@Model.title" name="title" />
+                    <br /><br />
+
+
+                    <input class="soinput" type="text" required="required" id="description" value="@Model.description" name="description" />
+                    <br /><br />
+
+
+                    <input class="soinput" type="number" value="@Model.price" required="required" id="price" name="price" />
+                    <br /><br />
+
+                    <button type="submit" id="submitBtn" class="btn btn-primary pull-right">Post this Ad</button><br /><br /><br /><br /><br />
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+</div><div class="col-md-2"></div>
+</div>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(".fancybox").fancybox();
+        $(":file").change(function () {
+            var img_id = 1;
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#imgshow1").attr('src', e.target.result);
+                    $("#fancybx").attr('href', e.target.result);
+                };
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+
+
+
+    });
+</script>

@@ -1,0 +1,10 @@
+﻿@model List<Ad_Poster_Project.Models.image>
+@{
+    ViewBag.Title = "showAdImages";
+}
+
+
+@foreach (var q in Model)
+{
+    <a class="fancybox" href="@q.img"><img style="height:226px; width:252px;" class="img-thumbnail" src="@q.img" /></a><br />
+}

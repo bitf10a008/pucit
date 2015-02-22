@@ -1,0 +1,119 @@
+﻿@model List<Ad_Poster_Project.Models.ad>
+<style>
+    body {
+        background-image: url('/Content/img/bg.jpg');
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position: center;
+        background-size: 100% 100%;
+    }
+    .linker {
+        display: block;
+        height: 100%;
+        width: 100%;
+        text-decoration: none;
+        font-family: cursive;
+        color: rgb(0, 0, 0);
+    }
+
+        .linker:hover {
+            color: rgb(0, 0, 0);
+        }
+
+    th {
+        color: black;
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(36, 35, 35, 1)), color-stop(15%, rgba(0, 0, 0, 0.37)), color-stop(100%, rgba(8, 8, 8, 0.33)));
+    }
+
+    th, tr {
+        padding: 10px;
+        height: 100%;
+        text-decoration: none;
+    }
+
+    table {
+        box-sizing: border-box;
+        background-color: white;
+        -webkit-box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow: 0px 1px 6px rgba(23, 69, 88, .5);
+        -webkit-border-radius: 12px;
+        -moz-border-radius: 7px;
+        border-radius: 6px;
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(7, 1, 1, 0.53)), color-stop(15%, rgba(43, 30, 24, 0.4)), color-stop(100%, #28332A));
+        background: -moz-linear-gradient(top, white 0%, white 55%, #e6e6fa 130%);
+        border-collapse: collapse;
+    }
+
+    tr:hover {
+        box-shadow: 0px 2px 18px 0px rgba(0,0,0,0.5);
+        cursor: pointer;
+    }
+
+        tr:hover td {
+            -moz-box-shadow: 0 4px 2px -3px rgba(0, 0, 0, 0.5) inset;
+            -webkit-box-shadow: 0 4px 2px -3px rgba(0, 0, 0, 0.5) inset;
+            box-shadow: 0 4px 2px -3px rgba(0, 0, 0, 0.5) inset;
+            background-color: white;
+            color: black;
+        }
+
+            tr:hover td:first-child {
+                -moz-box-shadow: 4px 4px 2px -3px rgba(0, 0, 0, 0.5) inset;
+                -webkit-box-shadow: 4px 4px 2px -3px rgba(0, 0, 0, 0.5) inset;
+                box-shadow: 4px 4px 2px -3px rgba(0, 0, 0, 0.5) inset;
+            }
+
+            tr:hover td:last-child {
+                -moz-box-shadow: 0 4px 2px -3px rgba(0, 0, 0, 0.5) inset;
+                -webkit-box-shadow: 0 4px 2px -3px rgba(0, 0, 0, 0.5) inset;
+                box-shadow: 0 4px 2px -3px rgba(0, 0, 0, 0.5) inset;
+            }
+</style>
+
+@{
+    ViewBag.Title = "Ads";
+}
+
+<br />
+<br />
+<br />
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <table class="table">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Price<span class="add-on"> Rs.</span></th>
+                <th>Ad posted on</th>
+                <th></th>
+                <th></th>
+
+            </tr>
+
+            @foreach (var x in Model)
+            {
+                <tr>
+                    <td><a class="linker" href="~/Home/showAdDetails/@x.Id">@x.title</a></td>
+                    <td><a class="linker" href="~/Home/showAdDetails/@x.Id">@x.description</a></td>
+                    <td><a class="linker" href="~/Home/showAdDetails/@x.Id">@x.category &nbsp;-&nbsp; @x.subcategory</a></td>
+                    <td><a class="linker" href="~/Home/showAdDetails/@x.Id">@x.price</a></td>
+                    <td><a class="linker" href="~/Home/showAdDetails/@x.Id">@x.post_date</a></td>
+                    <td><a href="~/Home/UpdateThisAd/@x.Id">Update</a></td>
+                    <td><a href="~/Home/deleteThisAd/@x.Id">Delete</a></td>
+                </tr>
+            }
+
+        </table>
+        @if (!Model.Any())
+        {
+            <p style="text-align:center; font-size:16px;">No items found..</p>
+        }
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+
+
